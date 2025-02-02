@@ -13,8 +13,11 @@ function multiply(a, b) {
 
 function divide(a, b) {
     if (b === 0) {
-        return "Error";
+        return 'Error';
     }
     return a / b;
 }
 
+let firstNumber = null;
+let operator = null;
+let currentDisplay = '0'
