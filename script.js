@@ -48,6 +48,10 @@ document .addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
+    function roundNumber(num) {
+        return Math.round(num * 100000000) / 100000000;
+    }
+
     const updateDisplay = function(value) {
         if(currentDisplay === '0' || shouldClearDisplay) {
             currentDisplay = value;
@@ -78,6 +82,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
                     shouldClearDisplay = true;
                     return;
                 }
+                result = roundNumber(result)
                 display.textContent = result;
                 currentDisplay = result.toString()
                 firstNumber = result;
@@ -97,12 +102,21 @@ document .addEventListener('DOMContentLoaded', (event) => {
                 shouldClearDisplay = true;
                 return;
             }
+            result = roundNumber(result);
             display.textContent = result;
             currentDisplay = result.toString()
             firstNumber = null;
             operator = null;
             shouldClearDisplay = true;
         } 
+    });
+
+    clearButton.addEventListener('click', function() {
+        currentDisplay = '0';
+        display.textContent = currentDisplay
+        firstNumber = null;
+        operator = null;
+        shouldClearDisplay = false;
     });
 
 });
