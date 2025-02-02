@@ -29,7 +29,8 @@ document .addEventListener('DOMContentLoaded', (event) => {
     const operatorButtons = document.querySelectorAll('.operator');
     const equalsButton = document.querySelector('.equals');
     const clearButton = document.querySelector('.clear');
-    const decimalButton = document.querySelector('.decimal')
+    const decimalButton = document.querySelector('.decimal');
+    const backSpaceButton = document.querySelector('.backspace')
 
     const operate = function(num1, num2, op) {
         switch(op) {
@@ -133,4 +134,13 @@ document .addEventListener('DOMContentLoaded', (event) => {
             updateDisplay('.');
         }
     });
+
+    backSpaceButton.addEventListener('click', function() {
+        currentDisplay = currentDisplay.slice(0, -1) || '0';
+        display.textContent = currentDisplay;
+        if (!currentDisplay.includes('.')) {
+            document.querySelector('.decimal').disabled = false;
+        }
+    });
+
 });
