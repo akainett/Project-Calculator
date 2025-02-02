@@ -20,4 +20,24 @@ function divide(a, b) {
 
 let firstNumber = null;
 let operator = null;
-let currentDisplay = '0'
+let currentDisplay = '0';
+let shouldClearDisplay = false;
+
+const operate = function(num1, num2, op) {
+    switch(op) {
+        case '+':
+            return add(num1, num2);
+
+        case '-':
+            return subtract(num1, num2);
+
+        case '*':
+            return multiply(num1, num2);
+
+        case '/':
+            return divide(num1, num2);
+
+        default:
+            return 'null';
+    }
+}
