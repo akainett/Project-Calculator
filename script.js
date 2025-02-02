@@ -23,6 +23,8 @@ let operator = null;
 let currentDisplay = '0';
 let shouldClearDisplay = false;
 
+const display = document.querySelector('.display');
+
 const operate = function(num1, num2, op) {
     switch(op) {
         case '+':
@@ -40,4 +42,12 @@ const operate = function(num1, num2, op) {
         default:
             return 'null';
     }
+}
+
+const updateDisplay = function(value) {
+    if(currentDisplay === '0' || shouldClearDisplay) {
+        currentDisplay = value;
+        shouldClearDisplay = false
+    }
+    display.textContent = currentDisplay;
 }
