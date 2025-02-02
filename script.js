@@ -29,6 +29,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
     const operatorButtons = document.querySelectorAll('.operator');
     const equalsButton = document.querySelector('.equals');
     const clearButton = document.querySelector('.clear');
+    const decimalButton = document.querySelector('.decimal')
 
     const operate = function(num1, num2, op) {
         switch(op) {
@@ -56,10 +57,13 @@ document .addEventListener('DOMContentLoaded', (event) => {
         if(currentDisplay === '0' || shouldClearDisplay) {
             currentDisplay = value;
             shouldClearDisplay = false
-        }else{
+        }else if(value !== '.') {
+            currentDisplay += value;
+        } else if(!currentDisplay.includes('.')) {
             currentDisplay += value;
         }
         display.textContent = currentDisplay;
+        decimalButton.disabled = currentDisplay.includes('.');
     }
 
     //Event listener for digit buttons
@@ -121,6 +125,12 @@ document .addEventListener('DOMContentLoaded', (event) => {
         firstNumber = null;
         operator = null;
         shouldClearDisplay = false;
+        decimalButton.disabled = false;
     });
 
+    decimalButton.addEventListener('click', function(){
+        if(!currentDisplay.includes('.')){
+            updateDisplay('.');
+        }
+    });
 });
