@@ -73,7 +73,11 @@ document .addEventListener('DOMContentLoaded', (event) => {
         button.addEventListener('click', function() {
             if(firstNumber === null) {
                 firstNumber = parseFloat(currentDisplay);
-            }else if(currentDisplay !== '') {
+            
+            } else if(currentDisplay === '' || currentDisplay === firstNumber.toString()) {
+                // If there's a first number but no second, just update the operator
+                // Do nothing, just update the operator
+            } else {          
                 let result = operate(firstNumber, parseFloat(currentDisplay), operator);
                 if(typeof result === 'string') {
                     display.textContent = result;
