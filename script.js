@@ -7,7 +7,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
     function subtract(a, b) {
         return a - b;
     }
-
+    // Function to perform calculations
     function multiply(a, b) {
         return a * b;
     }
@@ -18,7 +18,8 @@ document .addEventListener('DOMContentLoaded', (event) => {
         }
         return a / b;
     }
-
+    
+    //Variables to show calculator state
     let firstNumber = null;
     let operator = null;
     let currentDisplay = '0';
@@ -30,8 +31,10 @@ document .addEventListener('DOMContentLoaded', (event) => {
     const equalsButton = document.querySelector('.equals');
     const clearButton = document.querySelector('.clear');
     const decimalButton = document.querySelector('.decimal');
-    const backSpaceButton = document.querySelector('.backspace')
+    const backSpaceButton = document.querySelector('.backspace');
+    const toggleSignButton = document.querySelector('.toggle')
 
+    //
     const operate = function(num1, num2, op) {
         switch(op) {
             case '+':
@@ -54,6 +57,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
         return Math.round(num * 100000000) / 100000000;
     }
 
+    // Function to round numbers to avoid overflow
     const updateDisplay = function(value) {
         if(currentDisplay === '0' || shouldClearDisplay) {
             currentDisplay = value;
@@ -72,15 +76,16 @@ document .addEventListener('DOMContentLoaded', (event) => {
         button.addEventListener('click', function(){
             updateDisplay(button.textContent);
         });
-    });
+    });    
 
+    // Event listeners for operator buttons
     operatorButtons.forEach(button => {
         button.addEventListener('click', function() {
             if(firstNumber === null) {
                 firstNumber = parseFloat(currentDisplay);
-            
+                
+            // If there's a first number but no second, just update the operator
             } else if(currentDisplay === '' || currentDisplay === firstNumber.toString()) {
-                // If there's a first number but no second, just update the operator
                 // Do nothing, just update the operator
             } else {          
                 let result = operate(firstNumber, parseFloat(currentDisplay), operator);
@@ -101,6 +106,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
+    // Event listeners for equals button
     equalsButton.addEventListener('click', function(){
         if(firstNumber !== null && parseFloat(currentDisplay) !== null && operator !== null) {
             let result = operate(firstNumber, parseFloat(currentDisplay), operator);
@@ -120,6 +126,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
         } 
     });
 
+    // Event listeners for clear button
     clearButton.addEventListener('click', function() {
         currentDisplay = '0';
         display.textContent = currentDisplay
@@ -135,6 +142,7 @@ document .addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // Event listeners for backspace button
     backSpaceButton.addEventListener('click', function() {
         currentDisplay = currentDisplay.slice(0, -1) || '0';
         display.textContent = currentDisplay;
@@ -143,20 +151,49 @@ document .addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // Event listeners for toggle-sign button
+    toggleSignButton.addEventListener('click', function() {
+        // Avoid toggling if the display is just '0'
+        if (currentDisplay !== '0') {
+            currentDisplay = (parseFloat(currentDisplay) * -1).toString();
+            display.textContent = currentDisplay;
+        }
+    });
+
+    // Keyboard support
     document.addEventListener('keydown', function(event) {
-    const key = event.key;
-    const button = document.querySelector(`button[data-key="${key}"]`) || 
-                   document.querySelector(`button[data-key="${key.toLowerCase()}"]`);
-    
-    if (button) {
-        button.click();
-        event.preventDefault();
-    }
+        const key = event.key;
+
+        if (key === ".") {
+            decimalButton.click();
+            event.preventDefault();
+            return;
+        }
+        
+        if (key === "Backspace") {
+            backSpaceButton.click();
+            event.preventDefault();
+            return;
+        }
+
+        if (key === "Enter") {
+            equalsButton.click();
+            event.preventDefault(); 
+            return;
+        }
+
+        const button = document.querySelector(`button[data-key="${key}"]`) || 
+                    document.querySelector(`button[data-key="${key.toLowerCase()}"]`);
+        
+        if (button) {
+            button.click();
+            event.preventDefault();
+        }
     });
 
     // Add data-key attributes to buttons for keyboard support
     document.querySelectorAll('button').forEach(button => {
-        if (button.textContent.match(/[0-9]|\+|-|\*|\/|=/)) {
+        if (button.textContent.match(/[0-9]|\+|-|\*|\/|=|±/)) {
             button.setAttribute('data-key', button.textContent);
         }
     });
