@@ -143,4 +143,21 @@ document .addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    const button = document.querySelector(`button[data-key="${key}"]`) || 
+                   document.querySelector(`button[data-key="${key.toLowerCase()}"]`);
+    
+    if (button) {
+        button.click();
+        event.preventDefault();
+    }
+    });
+
+    // Add data-key attributes to buttons for keyboard support
+    document.querySelectorAll('button').forEach(button => {
+        if (button.textContent.match(/[0-9]|\+|-|\*|\/|=/)) {
+            button.setAttribute('data-key', button.textContent);
+        }
+    });
 });
