@@ -50,10 +50,14 @@ button {
     background: rgb(255, 145, 0);
 }
 
-.clear, .toggle, .percent {
+.clear, .backspace, .toggle {
     background: rgb(8, 134, 237);
 }
 
-.digit {
+.digit, .decimal {
     background: rgb(0, 128, 4);
+}
+
+#zero {
+    max-width: 194px;
 }
