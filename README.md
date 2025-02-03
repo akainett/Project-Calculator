@@ -1,1 +1,2 @@
 # Project-Calculator
+This is a simple, responsive calculator built with HTML, CSS, and JavaScript as part of an assignment from The Odin Project. This project focuses on everything i have learnt from the odin project foundation course. It allows users to perform basic arithmetic operations, including addition, subtraction, multiplication, division. The calculator also supports keyboard input and provides intuitive UI interactions like hover effects. 
